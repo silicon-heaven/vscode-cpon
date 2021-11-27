@@ -1,0 +1,282 @@
+{
+	"information_for_contributors": [
+		"We are happy to receive an update request."
+	],
+	"version": "1.0.0",
+	"name": "CPON (Chainpack object notation)",
+	"scopeName": "source.cpon",
+	"patterns": [
+		{
+			"include": "#value"
+		}
+	],
+	"repository": {
+		"array": {
+			"begin": "\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.array.begin.cpon"
+				}
+			},
+			"end": "\\]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.array.end.cpon"
+				}
+			},
+			"name": "meta.structure.array.cpon",
+			"patterns": [
+				{
+					"include": "#value"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.array.cpon"
+				},
+				{
+					"match": "[^\\s\\]]",
+					"name": "invalid.illegal.expected-array-separator.cpon"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"begin": "/\\*\\*(?!/)",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.cpon"
+						}
+					},
+					"end": "\\*/",
+					"name": "comment.block.documentation.cpon"
+				},
+				{
+					"begin": "/\\*",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.cpon"
+						}
+					},
+					"end": "\\*/",
+					"name": "comment.block.cpon"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.comment.cpon"
+						}
+					},
+					"match": "(//).*$\\n?",
+					"name": "comment.line.double-slash.js"
+				}
+			]
+		},
+		"constant": {
+			"match": "\\b(?:true|false|null)\\b",
+			"name": "constant.language.cpon"
+		},
+		"number": {
+			"match": "(?x)        # turn on extended mode\n  -?(0x)?        # an optional minus\n  (?:\n    0       # a zero\n    |       # ...or...\n    [1-9]   # a 1-9 character\n    \\d*     # followed by zero or more digits\n  )\n  (?:\n    (?:\n      \\.    # a period\n      \\d+   # followed by one or more digits\n    )?\n    (?:\n      [eE]  # an e character\n      [+-]? # followed by an option +/-\n      \\d+   # followed by one or more digits\n    )?      # make exponent optional\n  )?        # make decimal portion optional",
+			"name": "constant.numeric.cpon"
+		},
+		"datetime": {
+			"match": "d\"\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d(\\.\\d{3})?([+-][0-2]\\d((:)?[0-5]\\d)?|Z)\"",
+			"name": "constant.other.cpon"
+		},
+		"object": {
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.dictionary.begin.cpon"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.dictionary.end.cpon"
+				}
+			},
+			"name": "meta.structure.dictionary.cpon",
+			"patterns": [
+				{
+					"comment": "the JSON object key",
+					"include": "#skey"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"begin": ":",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.separator.dictionary.key-value.cpon"
+						}
+					},
+					"end": "(,)|(?=\\})|(?=\\n)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.separator.dictionary.pair.cpon"
+						}
+					},
+					"name": "meta.structure.dictionary.value.cpon",
+					"patterns": [
+						{
+							"comment": "the JSON object value",
+							"include": "#value"
+						},
+						{
+							"match": "[^\\s,]",
+							"name": "invalid.illegal.expected-dictionary-separator.cpon"
+						}
+					]
+				},
+				{
+					"match": "[^\\s\\}]",
+					"name": "invalid.illegal.expected-dictionary-separator.cpon"
+				}
+			]
+		},
+		"metadict": {
+			"begin": "<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.metadict.begin.cpon"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.metadict.end.cpon"
+				}
+			},
+			"name": "meta.structure.metadict.cpon",
+			"patterns": [
+				{
+					"comment": "the CPON meta string key",
+					"include": "#skey"
+				},
+				{
+					"comment": "the CPON meta int key",
+					"include": "#ikey"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"begin": ":",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.separator.metadict.key-value.cpon"
+						}
+					},
+					"end": "(,)|(?=>)|(?=\\n)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.separator.metadict.pair.cpon"
+						}
+					},
+					"name": "meta.structure.metadict.value.cpon",
+					"patterns": [
+						{
+							"comment": "the JSON object value",
+							"include": "#value"
+						},
+						{
+							"match": "[^\\s,]",
+							"name": "invalid.illegal.expected-dictionary-separator3.cpon"
+						}
+					]
+				},
+				{
+					"match": "[^\\s>]",
+					"name": "invalid.illegal.expected-dictionary-separator2.cpon"
+				}
+			]
+		},
+		"string": {
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.cpon"
+				}
+			},
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.cpon"
+				}
+			},
+			"name": "string.quoted.double.cpon",
+			"patterns": [
+				{
+					"include": "#stringcontent"
+				}
+			]
+		},
+		"ikey": {
+			"match": "[1-9][0-9]*",
+			"name": "constant.numeric.cpon"
+		},
+		"skey": {
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.support.type.property-name.begin.cpon"
+				}
+			},
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.support.type.property-name.end.cpon"
+				}
+			},
+			"name": "string.cpon support.type.property-name.cpon",
+			"patterns": [
+				{
+					"include": "#stringcontent"
+				}
+			]
+		},
+		"stringcontent": {
+			"patterns": [
+				{
+					"match": "(?x)                # turn on extended mode\n  \\\\                # a literal backslash\n  (?:               # ...followed by...\n    [\"\\\\/bfnrt]     # one of these characters\n    |               # ...or...\n    u               # a u\n    [0-9a-fA-F]{4}) # and four hex digits",
+					"name": "constant.character.escape.cpon"
+				},
+				{
+					"match": "\\\\.",
+					"name": "invalid.illegal.unrecognized-string-escape.cpon"
+				}
+			]
+		},
+		"value": {
+			"patterns": [
+				{
+					"include": "#metadict"
+				},
+				{
+					"include": "#constant"
+				},
+				{
+					"include": "#number"
+				},
+				{
+					"include": "#datetime"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#array"
+				},
+				{
+					"include": "#object"
+				},
+				{
+					"include": "#comments"
+				}
+			]
+		}
+	}
+}

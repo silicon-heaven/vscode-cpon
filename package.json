@@ -1,0 +1,25 @@
+{
+    "name": "cpon",
+    "displayName": "cpon",
+    "description": "Cpon object notation",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.62.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "cpon",
+            "aliases": ["Cpon", "cpon"],
+            "extensions": [".cpon"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "cpon",
+            "scopeName": "source.cpon",
+            "path": "./syntaxes/cpon.tmLanguage.json"
+        }]
+    }
+}
