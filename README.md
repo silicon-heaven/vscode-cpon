@@ -4,6 +4,10 @@
 
 Standalone meta (like `[1, <>, 2]`) is not marked as syntax error
 
+## Install
+Copy the extension folder to the extension directory. This is:
+* on Windows `%USERPROFILE%\.vscode\extensions`
+* on Mac/Linux `$HOME/.vscode/extensions`
 
 -----------------------------------------------------------------------------------------------------------
 
